@@ -1,13 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.javaex.vo.EmaillistVo" %>
-<%@ page import="java.util.List" %>
 
-<%
-	List<EmaillistVo> list = (List<EmaillistVo>) request.getAttribute("list");
-	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-
-%>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -22,25 +16,26 @@
 	<!-- 메일정보 리스트 -->
 	<%-- list에서 하나씩 빼서 테이블를 채운다--%>
 	
-		<% 
-			for(EmaillistVo vo : list) {
-		%>
+	
+	<c:forEach items = "${list}" var = "vo">
+	
 		<table border="1" cellpadding="5" cellspacing="2">
 			<tr>
 				<td align=right width="110">Last name: </td>
-				<td width="170"><%= vo.getLastName() %></td>
+				<td width="170">${vo.lastName }</td>
 			</tr>
 			<tr>
 				<td align=right >First name: </td>
-				<td><%= vo.getFirstName() %></td>
+				<td>${vo.firstName }</td>
 			</tr>
 			<tr>
 				<td align=right>Email address: </td>
-				<td><%= vo.getEmail() %></td>
+				<td>${vo.email }</td>
 			</tr>
 		</table>
 		<br>
-	  <%   } %>
+	
+	</c:forEach>
 	<p>
 		<a href="el?a=form">추가메일 등록</a>
 	</p>

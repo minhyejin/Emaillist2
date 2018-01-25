@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javaex.dao.EmaillistDao;
+import com.javaex.util.WebUtil;
 import com.javaex.vo.EmaillistVo;
 
 
@@ -28,9 +29,11 @@ public class EmaillistServelet extends HttpServlet {
 		if ("form".equals(actionName)) {
 			
 			System.out.println("form 진입");
-			RequestDispatcher rd = request.getRequestDispatcher("form.jsp");
-			rd.forward(request, response);//포워드는 이 두줄 
+			WebUtil.forward(request, response,"/WEB-INF/form.jsp");
 			
+			/*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/form.jsp");
+			rd.forward(request, response);//포워드는 이 두줄 
+*/			
 			
 		}else if ("insert".equals(actionName)) {
 			System.out.println("insert 진입");
@@ -50,7 +53,9 @@ public class EmaillistServelet extends HttpServlet {
 			EmaillistDao dao = new EmaillistDao();
 			dao.insert(vo);
 			
-			response.sendRedirect("el?a=list");
+			WebUtil.redirect(request, response, "/emaillist2/el?a=list");
+			
+			/*response.sendRedirect("/emaillist2/el?a=list");*/
 			
 			
 		}
@@ -61,8 +66,10 @@ public class EmaillistServelet extends HttpServlet {
 			List<EmaillistVo> list = dao.getList();
 			
 			request.setAttribute("list", list );//부를 이름, 실제 데이터
-			RequestDispatcher rd = request.getRequestDispatcher("list.jsp");
-			rd.forward(request, response );
+			
+			WebUtil.forward(request, response, "/WEB-INF/list.jsp");
+			/*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/list.jsp");
+			rd.forward(request, response );*/
 			
 		}else {
 			System.out.println("잘못된 a값 처리");
